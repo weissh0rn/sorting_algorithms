@@ -15,14 +15,17 @@ void InsertSort(T array[], size_t array_size);
 template <typename T>
 void SelectSort(T array[], size_t array_size);
 
-int main()
+template <typename T>
+void QuickSort(T array[], int first, int last);
+
+int main(void)
 {
-	const int size = 20;
+	const int size = 10;
 	int array1[size];
 	InitArray(array1, size);
 	std::cout << "Array before Sort:\n";
 	ShowArray(array1, size);
-	InsertSort(array1, size);
+	QuickSort(array1, 0, size - 1);
 	std::cout << "\nArray after InsertSort:\n";
 	ShowArray(array1, size);
 
@@ -83,5 +86,33 @@ void SelectSort(T array[], size_t array_size)
 				std::swap(array[i], array[j]);
 			}
 		}
+	}
+}
+
+template <typename T>
+void QuickSort(T array[], int first, int last)
+{
+	if (first < last) {
+		T middle = array[(first + last) / 2];
+		int i = first;
+		int j = last;
+
+		do {
+			while (middle < array[j]) {
+				--j;
+			}
+			while (array[i] < middle) {
+				++i;
+			}
+
+			if (i <= j) {
+				std::swap(array[i], array[j]);
+				++i;
+				--j;
+			}
+		} while (i <= j);
+
+		QuickSort(array, first, j);
+		QuickSort(array, i, last);
 	}
 }
